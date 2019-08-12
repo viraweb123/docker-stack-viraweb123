@@ -22,7 +22,8 @@ return array(
         'RestLog',
         'Shop',
         'SDP',
-        'Exchange'
+        'Exchange',
+        'Marketplace'
     ),
     'spas'=> array('amh-shop', 'my-dashboard'),
     'middleware_classes' => array(
