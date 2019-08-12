@@ -38,6 +38,10 @@ services:
       - type: volume
         source: sites-enabled-vol
         target: /var/www/sites-enabled
+        
+  ###########################################################################
+  # MySQL
+  ###########################################################################
   mysql:
     build:
       context: mysql/
@@ -57,12 +61,32 @@ services:
       MYSQL_ROOT_HOST: '%'
     networks:
       - viraweb
-#    ports:
-#      - "3306:3306"
     volumes:
       - type: volume
         source: mysql-vol
         target: /var/lib/mysql
+        
+  ###########################################################################
+  # PHPMyAdmin
+  ###########################################################################
+  phpmyadmin:
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 8081:80
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    networks:
+      - viraweb
+  
+  ###########################################################################
+  # Pluf
+  ###########################################################################
   pluf:
     build:
       context: pluf/
