@@ -42,7 +42,7 @@ RUN docker-php-ext-enable mysqli
 RUN mkdir -p /usr/share/man/man1
 RUN apt-get update
 RUN apt-get install --no-install-recommends -y zlib1g-dev zip unzip
-RUN apt-get install --no-install-recommends -y openjdk-11-jre-headless ca-certificates-java
+RUN apt-get install --no-install-recommends -y openjdk-9-jre-headless ca-certificates-java
 
 RUN docker-php-ext-install zip 
 #RUN docker-php-ext-install zlib 
