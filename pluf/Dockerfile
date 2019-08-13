@@ -77,7 +77,7 @@ RUN docker-php-ext-enable zip
 
 # Support ZIP
 RUN mkdir -p /usr/share/man/man1
-RUN apt-get install --no-install-recommends -y openjdk-11-jre-headless ca-certificates-java
+RUN apt-get install --no-install-recommends -y default-jre
 
 
 # Add composer
