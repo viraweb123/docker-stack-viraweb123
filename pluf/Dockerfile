@@ -39,12 +39,9 @@ RUN docker-php-ext-enable mysqli
 #RUN docker-php-ext-install SimpleXML 
 
 # Support ZIP
-RUN echo "deb http://http.debian.net/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list
-RUN apt-get install --no-install-recommends -y zlib1g-dev zip unzip
-# install jre
 RUN mkdir -p /usr/share/man/man1
-RUN apt-get install --no-install-recommends -y openjdk-8-jre-headless ca-certificates-java
-RUN java -version
+RUN apt-get install --no-install-recommends -y zlib1g-dev zip unzip
+RUN apt-get install --no-install-recommends -y openjdk-11-jre-headless ca-certificates-java
 
 RUN docker-php-ext-install zip 
 #RUN docker-php-ext-install zlib 
@@ -124,8 +121,9 @@ RUN rm /var/log/apache2/access.log
 
 # enable PHP mode
 RUN a2enmod rewrite
-#RUN a2enmod zlib
-#RUN a2enmod gzip
+RUN a2enmod setenvif
+RUN a2enmod mime
+RUN a2enmod socache_shmcb
 RUN a2enmod ssl
 
 
