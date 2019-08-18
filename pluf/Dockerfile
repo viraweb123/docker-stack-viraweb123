@@ -38,11 +38,8 @@ RUN docker-php-ext-enable mysqli
 #RUN docker-php-ext-install xmlwriter 
 #RUN docker-php-ext-install SimpleXML 
 
-# Support ZIP
-RUN mkdir -p /usr/share/man/man1
+RUN apt-get update
 RUN apt-get install --no-install-recommends -y zlib1g-dev zip unzip
-RUN apt-get install --no-install-recommends -y openjdk-11-jre-headless ca-certificates-java
-
 RUN docker-php-ext-install zip 
 #RUN docker-php-ext-install zlib 
 RUN docker-php-ext-enable zip
@@ -78,13 +75,17 @@ RUN docker-php-ext-enable zip
 #RUN docker-php-ext-install tokenizer 
 
 
+# Support ZIP
+RUN mkdir -p /usr/share/man/man1
+RUN apt-get install --no-install-recommends -y default-jre
+
+
 # Add composer
 WORKDIR /var/www/
 RUN apt-get install --no-install-recommends -y git
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 # RUN php -r "if (hash_file('sha384', 'composer-setup.php') === 'a5c698ffe4b8e849a443b120cd5ba38043260d5c4023dbf93e1558871f1f07f58274fc6f4c93bcfd858c6bd0775cd8d1') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
 RUN php composer-setup.php
-
 
 WORKDIR /var/www
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -121,9 +122,6 @@ RUN rm /var/log/apache2/access.log
 
 # enable PHP mode
 RUN a2enmod rewrite
-RUN a2enmod setenvif
-RUN a2enmod mime
-RUN a2enmod socache_shmcb
 RUN a2enmod ssl
 
 
