@@ -20,6 +20,7 @@
 	"prefer-stable" : true,
 	"require" : {
 		"pluf/bank" : "5.11.x",
+		"pluf/backup" : "5.11.x",
 		"pluf/cache" : "5.11.x",
 		"pluf/captcha" : "5.11.x",
 		"pluf/cms" : "5.11.x",
