@@ -117,7 +117,7 @@ return array(
         )
     ),
 
-    'marketplace.backend' => 'http://marketplace.digidoki.come',
+    'marketplace.backend' => 'http://marketplace.digidoki.com',
 
     // -------------------------------------------------------------
     // SEO
