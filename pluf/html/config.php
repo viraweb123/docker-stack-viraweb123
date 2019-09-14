@@ -117,7 +117,7 @@ return array(
         )
     ),
 
-    'marketplace.backend' => 'http://marketplace.viraweb123.ir',
+    'marketplace.backend' => 'http://marketplace.digidoki.come',
 
     // -------------------------------------------------------------
     // SEO
