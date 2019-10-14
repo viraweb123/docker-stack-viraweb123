@@ -1,33 +1,29 @@
-version: "3.5"
+version: "3.7"
 
-networks:
 networks:
   front-tier:
     name: front-tier
-    external: false
+    external: true
   back-tier:
     name: back-tier
-    external: false
+    external: true
     
 volumes:
-  mysql-db-vol:
-    external: false
-    name: mysql-db
-  storage-vol:
-    name: storage
-    external: false
-  log-vol:
-    name: logs
-    external: false
-  sites-enabled-vol:
-    name: sites-enabled
-    external: false
-  sites-certificates-vol:
-    name: sites-certificates
-    external: false
+  mysql-db:
+    external: true
+  storage:
+    external: true
+  logs:
+    external: true
+  sites-enabled:
+    external: true
+  sites-certificates:
+    external: true
     
 services:
   prerender:
+    container_name: prerender
+    hostname: prerender
     build:
       context: prerender/
     deploy:
@@ -48,6 +44,8 @@ services:
       - back-tier
     restart: always
   mysql:
+    container_name: mysql
+    hostname: mysql
     build:
       context: mysql/
     deploy:
@@ -71,6 +69,8 @@ services:
         target: /var/lib/mysql
     restart: always
   pluf:
+    container_name: pluf
+    hostname: pluf
     build:
       context: pluf/
     deploy:
