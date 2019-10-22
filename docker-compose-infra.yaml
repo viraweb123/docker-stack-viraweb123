@@ -1,0 +1,27 @@
+version: "3.7"
+
+networks:
+  front-tier:
+    name: front-tier
+    external: false
+  back-tier:
+    name: back-tier
+    external: false
+    
+volumes:
+  mysql-db:
+    name: mysql-db
+    external: false
+  storage:
+    name: storage
+    external: false
+  logs:
+    name: logs
+    external: false
+  sites-enabled:
+    name: sites-enabled
+    external: false
+  sites-certificates:
+    name: sites-certificates
+    external: false
+    

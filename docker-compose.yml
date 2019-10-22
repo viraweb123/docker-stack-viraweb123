@@ -1,6 +1,29 @@
-version: "3.3"
+version: "3.7"
+
+networks:
+  front-tier:
+    name: front-tier
+    external: true
+  back-tier:
+    name: back-tier
+    external: true
+    
+volumes:
+  mysql-db:
+    external: true
+  storage:
+    external: true
+  logs:
+    external: true
+  sites-enabled:
+    external: true
+  sites-certificates:
+    external: true
+    
 services:
   prerender:
+    container_name: prerender
+    hostname: prerender
     build:
       context: prerender/
     deploy:
@@ -18,31 +41,11 @@ services:
       PAGE_LOAD_TIMEOUT: 20000
       WAIT_AFTER_LAST_REQUEST: 250
     networks:
-      - viraweb
-  dms:
-    build:
-      context: dms/
-    deploy:
-      restart_policy:
-        condition: on-failure
-    labels:
-      com.dgyar.title: "Domain management system"
-      com.dgyar.description: "Create and manages certificates, domains, and dns"
-      com.dgyar.department: "IT"
-    networks:
-      - viraweb
-    volumes:
-      - type: volume
-        source: plufStorage-vol
-        target: /var/www/storage
-      - type: volume
-        source: sites-enabled-vol
-        target: /var/www/sites-enabled
-        
-  ###########################################################################
-  # MySQL
-  ###########################################################################
+      - back-tier
+    restart: always
   mysql:
+    container_name: mysql
+    hostname: mysql
     build:
       context: mysql/
     deploy:
@@ -52,7 +55,6 @@ services:
       com.dgyar.description: "Data node"
       com.dgyar.department: "IT"
     command: --sql_mode=""
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: P@ssw0rd
       MYSQL_DATABASE: plufdb
@@ -60,34 +62,15 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ROOT_HOST: '%'
     networks:
-      - viraweb
+      - back-tier
     volumes:
       - type: volume
-        source: mysql-vol
+        source: mysql-db
         target: /var/lib/mysql
-        
-  ###########################################################################
-  # PHPMyAdmin
-  ###########################################################################
-  phpmyadmin:
-    depends_on:
-      - mysql
-    links:
-      - mysql
-    image: phpmyadmin/phpmyadmin
     restart: always
-    ports:
-      - 8081:80
-    environment:
-      PMA_HOST: mysql
-      PMA_PORT: 3306
-    networks:
-      - viraweb
-  
-  ###########################################################################
-  # Pluf
-  ###########################################################################
   pluf:
+    container_name: pluf
+    hostname: pluf
     build:
       context: pluf/
     deploy:
@@ -98,73 +81,45 @@ services:
       com.dgyar.department: "IT"
     volumes:
       - type: volume
-        source: plufStorage-vol
+        source: storage
         target: /var/www/storage
       - type: volume
-        source: plufLetsencrypt-vol
+        source: logs
         target: /var/www/logs
       - type: volume
-        source: sites-enabled-vol
+        source: sites-enabled
         target: /etc/apache2/sites-enabled
+      - type: volume
+        source: sites-certificates
+        target: /etc/letsencrypt
     ports:
       - "80:80"
       - "443:443"
     networks:
-      - viraweb
+      - front-tier
+      - back-tier
     depends_on:
       - mysql
-  # Backup service
-  volumerize:
-    container_name: volumerize
-    image: blacklabelops/volumerize
-    restart: unless-stopped
-    environment:
-        - 'TZ=Asia/Tehran'
-        - 'VOLUMERIZE_SOURCE=/source'
-        - 'VOLUMERIZE_TARGET=file:///backup'
-        - 'VOLUMERIZE_JOBBER_TIME=0 0 3 * * *'
-        - 'VOLUMERIZE_FULL_IF_OLDER_THAN=7D'
-        - 'JOB_NAME2=RemoveOldBackups'
-        - 'JOB_COMMAND2=/etc/volumerize/remove-older-than 7D --force'
-        - 'JOB_TIME2=0 0 * * * *'
-    # Add all service volume to volumerize
-    # NOTE: for restore data, first stop all container and delete :ro 
-    volumes:
-        - type: volume
-          source: mysql-vol
-          target: /source/mysql:ro
-        - type: volume
-          source: plufLetsencrypt-vol 
-          target: /source/letscript:ro
-        - type: volume
-          source: plufLog-vol
-          target: /source/pluflog:ro
-        - type: volume
-          source: plufStorage-vol
-          target: /source/plufstorage:ro
-        - type: volume
-          source: sites-enabled-vol
-          target: /source/siteenable:ro
-        - type: bind
-          source: /backup
-          target: /backup
-        - type: volume
-          source: backup-cache
-          target: /volumerize-cache
+      - prerender
+#  dms:
+#    build:
+#      context: dms/
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+#    labels:
+#      com.dgyar.title: "Domain management system"
+#      com.dgyar.description: "Create and manages certificates, domains, and dns"
+#      com.dgyar.department: "IT"
+#    networks:
+#      - back-tier
+#    volumes:
+#      - type: volume
+#        source: plufStorage-vol
+#        target: /var/www/storage
+#      - type: volume
+#        source: sites-enabled-vol
+#        target: /var/www/sites-enabled
+#    restart: always
 
-networks:
-  viraweb:
-  
-volumes:
-  mysql-vol:
-    external: false
-  plufStorage-vol:
-    external: false
-  plufLog-vol:
-    external: false
-  plufLetsencrypt-vol:
-    external: false
-  sites-enabled-vol:
-    external: false
-  backup-cache:
-    external: false
+

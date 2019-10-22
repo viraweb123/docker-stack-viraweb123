@@ -8,13 +8,20 @@ MAINTAINER ViraWeb123 (info@viraweb123.com)
 ###########################################################
 # Build process
 ###########################################################
-RUN apt-get update
-RUN docker-php-source extract
+RUN mkdir -p /usr/share/man/man1
+RUN apt-get update && \
+	apt-get install -y --no-install-recommends \
+		libssl-dev \
+		libcurl4-openssl-dev \
+		wget \
+		vim \
+		zlib1g-dev \
+		zip \
+		unzip \
+		default-jre
 
+RUN docker-php-source extract
 RUN docker-php-ext-install ctype
-RUN apt-get install -y --no-install-recommends \
-	libssl-dev \
-	libcurl4-openssl-dev 
 RUN \
     docker-php-ext-install openssl || \
     ( mv /usr/src/php/ext/openssl/config0.m4 /usr/src/php/ext/openssl/config.m4 && \
@@ -38,8 +45,6 @@ RUN docker-php-ext-enable mysqli
 #RUN docker-php-ext-install xmlwriter 
 #RUN docker-php-ext-install SimpleXML 
 
-RUN apt-get update
-RUN apt-get install --no-install-recommends -y zlib1g-dev zip unzip
 RUN docker-php-ext-install zip 
 #RUN docker-php-ext-install zlib 
 RUN docker-php-ext-enable zip
@@ -75,10 +80,12 @@ RUN docker-php-ext-enable zip
 #RUN docker-php-ext-install tokenizer 
 
 
-# Support ZIP
-RUN mkdir -p /usr/share/man/man1
-RUN apt-get install --no-install-recommends -y default-jre
 
+RUN wget https://dl.eff.org/certbot-auto && \
+	mv certbot-auto /usr/local/bin/certbot-auto && \
+	chown root /usr/local/bin/certbot-auto && \
+	chmod 0755 /usr/local/bin/certbot-auto
+RUN echo "0 0,12 * * * root python -c 'import random; import time; time.sleep(random.random() * 3600)' && /usr/local/bin/certbot-auto renew" | tee -a /etc/crontab > /dev/null
 
 # Add composer
 WORKDIR /var/www/
@@ -123,6 +130,4 @@ RUN rm /var/log/apache2/access.log
 # enable PHP mode
 RUN a2enmod rewrite
 RUN a2enmod ssl
-
-
 
