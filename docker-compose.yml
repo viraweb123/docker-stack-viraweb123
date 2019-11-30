@@ -101,25 +101,4 @@ services:
     depends_on:
       - mysql
       - prerender
-#  dms:
-#    build:
-#      context: dms/
-#    deploy:
-#      restart_policy:
-#        condition: on-failure
-#    labels:
-#      com.dgyar.title: "Domain management system"
-#      com.dgyar.description: "Create and manages certificates, domains, and dns"
-#      com.dgyar.department: "IT"
-#    networks:
-#      - back-tier
-#    volumes:
-#      - type: volume
-#        source: plufStorage-vol
-#        target: /var/www/storage
-#      - type: volume
-#        source: sites-enabled-vol
-#        target: /var/www/sites-enabled
-#    restart: always
-
 
