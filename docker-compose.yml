@@ -3,36 +3,25 @@ version: "3.7"
 networks:
   front-tier:
     name: front-tier
-    external: true
+    driver: overlay
   back-tier:
     name: back-tier
-    external: true
-    
-volumes:
-  mysql-db:
-    external: true
-  storage:
-    external: true
-  logs:
-    external: true
-  sites-enabled:
-    external: true
-  sites-certificates:
-    external: true
-    
+    driver: overlay
+ 
 services:
   prerender:
-    container_name: prerender
+#    container_name: prerender
     hostname: prerender
     build:
       context: prerender/
     deploy:
       restart_policy:
         condition: on-failure
+      replicas: 1
     labels:
-      com.dgyar.title: "Prerender system"
-      com.dgyar.description: "Create and manages prerendered pabes"
-      com.dgyar.department: "IT"
+      title: "Prerender system"
+      description: "Create and manages prerendered pabes"
+      department: "IT"
     environment:
       SERVER_DIR: /root
       CHROME_BIN: /usr/bin/chromium-browser
@@ -42,15 +31,22 @@ services:
       WAIT_AFTER_LAST_REQUEST: 250
     networks:
       - back-tier
-    restart: always
+    volumes:
+      - "/home/gluster/ssd01:/var/lib/mysql"
+      - "/mnt/storage:/var/www/storage"
+
   mysql:
-    container_name: mysql
+#    container_name: mysql
     hostname: mysql
     build:
       context: mysql/
     deploy:
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: 
+          - node.labels.disk == ssd
+      replicas: 1
     labels:
       com.dgyar.description: "Data node"
       com.dgyar.department: "IT"
@@ -64,62 +60,34 @@ services:
     networks:
       - back-tier
     volumes:
-      - type: volume
-        source: mysql-db
-        target: /var/lib/mysql
-    restart: always
+      - "/home/gluster/ssd01:/var/lib/mysql"
   pluf:
-    container_name: pluf
+#    container_name: pluf
     hostname: pluf
     build:
       context: pluf/
     deploy:
       restart_policy:
         condition: on-failure
+      placement:
+        constraints: 
+          - node.labels.type == gateway
     labels:
       com.dgyar.description: "Public webapp interface"
       com.dgyar.department: "IT"
     volumes:
-      - type: volume
-        source: storage
-        target: /var/www/storage
-      - type: volume
-        source: logs
-        target: /var/www/logs
-      - type: volume
-        source: sites-enabled
-        target: /etc/apache2/sites-enabled
-      - type: volume
-        source: sites-certificates
-        target: /etc/letsencrypt
+      - "/mnt/storage:/var/www/storage"
+      - "/mnt/logs:/var/www/logs"
+      - "/mnt/apache:/etc/apache2"
+      - "/mnt/letsencrypt:/etc/letsencrypt"
     ports:
-      - "80:80"
-      - "443:443"
+      - "8082:80"
+      #- "443:443"
     networks:
       - front-tier
       - back-tier
     depends_on:
       - mysql
       - prerender
-#  dms:
-#    build:
-#      context: dms/
-#    deploy:
-#      restart_policy:
-#        condition: on-failure
-#    labels:
-#      com.dgyar.title: "Domain management system"
-#      com.dgyar.description: "Create and manages certificates, domains, and dns"
-#      com.dgyar.department: "IT"
-#    networks:
-#      - back-tier
-#    volumes:
-#      - type: volume
-#        source: plufStorage-vol
-#        target: /var/www/storage
-#      - type: volume
-#        source: sites-enabled-vol
-#        target: /var/www/sites-enabled
-#    restart: always
 
 
