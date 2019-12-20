@@ -10,7 +10,7 @@ networks:
  
 services:
   prerender:
-#    container_name: prerender
+    image: docker.viraweb123.ir/prerender
     hostname: prerender
     build:
       context: prerender/
@@ -36,10 +36,8 @@ services:
       - "/mnt/storage:/var/www/storage"
 
   mysql:
-#    container_name: mysql
+    image: docker.viraweb123.ir/mysql
     hostname: mysql
-    build:
-      context: mysql/
     deploy:
       restart_policy:
         condition: on-failure
@@ -62,7 +60,7 @@ services:
     volumes:
       - "/home/gluster/ssd01:/var/lib/mysql"
   pluf:
-#    container_name: pluf
+    image: docker.viraweb123.ir/pluf
     hostname: pluf
     build:
       context: pluf/
@@ -82,7 +80,7 @@ services:
       - "/mnt/letsencrypt:/etc/letsencrypt"
     ports:
       - "8082:80"
-      #- "443:443"
+      - "443:443"
     networks:
       - front-tier
       - back-tier
