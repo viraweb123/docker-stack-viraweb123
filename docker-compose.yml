@@ -10,7 +10,7 @@ networks:
  
 services:
   prerender:
-#    container_name: prerender
+    image: viraweb123-prerender.
     hostname: prerender
     build:
       context: prerender/
@@ -36,10 +36,8 @@ services:
       - "/mnt/storage:/var/www/storage"
 
   mysql:
-#    container_name: mysql
+    image: mysql:5.7
     hostname: mysql
-    build:
-      context: mysql/
     deploy:
       restart_policy:
         condition: on-failure
@@ -62,7 +60,7 @@ services:
     volumes:
       - "/home/gluster/ssd01:/var/lib/mysql"
   pluf:
-#    container_name: pluf
+    image: vw-pluf
     hostname: pluf
     build:
       context: pluf/
