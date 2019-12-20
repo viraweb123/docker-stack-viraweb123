@@ -17,13 +17,18 @@ return array(
         'Tenant',
         'SuperTenant',
         'Bank',
+        'Backup',
         'CMS',
         'Seo',
         'RestLog',
         'Shop',
         'SDP',
         'Exchange',
-        'Marketplace'
+        'Marketplace',
+        'TMS',
+        'SuperTms',
+        'Jms',
+        'SuperJms'
     ),
     'spas'=> array('amh-shop', 'my-dashboard'),
     'middleware_classes' => array(
