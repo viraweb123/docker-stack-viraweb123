@@ -12,8 +12,6 @@ services:
   prerender:
     image: docker.viraweb123.ir/prerender
     hostname: prerender
-    build:
-      context: prerender/
     deploy:
       restart_policy:
         condition: on-failure
@@ -62,8 +60,6 @@ services:
   pluf:
     image: docker.viraweb123.ir/pluf
     hostname: pluf
-    build:
-      context: pluf/
     deploy:
       restart_policy:
         condition: on-failure
