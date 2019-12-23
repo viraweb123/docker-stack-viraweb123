@@ -4,7 +4,7 @@ $base = '';
 /*
  * Old APIs
  */
-$api_old = array( );
+$api_old = array();
 
 /*
  * Basic API-V2
@@ -87,6 +87,12 @@ $api_v2 = array(
         'regex' => '#^/api/v2/backup#',
         'base' => $base,
         'sub' => Pluf\Backup\Module::urls
+    ),
+    array( // Jms
+        'app' => 'Jms',
+        'regex' => '#^/api/v2/jms#',
+        'base' => $base,
+        'sub' => include Pluf\Jms\Module::urlsPath
     )
 );
 
