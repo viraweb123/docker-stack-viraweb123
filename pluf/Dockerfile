@@ -112,6 +112,8 @@ COPY flyway.conf /var/www/
 COPY README.md /var/www/
 COPY run.sh /var/www/
 RUN chmod +x /var/www/run.sh
+COPY update_db.sh /var/www/
+RUN chmod +x /var/www/update_db.sh
 
 RUN chmod 777 /var/www/storage/
 RUN chmod 777 /var/www/logs/
