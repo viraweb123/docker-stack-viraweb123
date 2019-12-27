@@ -4,35 +4,17 @@ networks:
   front-tier:
     name: front-tier
     driver: overlay
+    attachable: true
+    ipam:
+      config:
+        - subnet: 70.28.0.0/16
+#        - gateway: 70.28.5.254
   back-tier:
     name: back-tier
     driver: overlay
+    attachable: true
  
 services:
-  prerender:
-    image: docker.viraweb123.ir/prerender
-    hostname: prerender
-    deploy:
-      restart_policy:
-        condition: on-failure
-      replicas: 1
-    labels:
-      title: "Prerender system"
-      description: "Create and manages prerendered pabes"
-      department: "IT"
-    environment:
-      SERVER_DIR: /root
-      CHROME_BIN: /usr/bin/chromium-browser
-      CHROME_PATH: /usr/lib/chromium/
-      PAGE_DONE_CHECK_INTERVAL: 500
-      PAGE_LOAD_TIMEOUT: 20000
-      WAIT_AFTER_LAST_REQUEST: 250
-    networks:
-      - back-tier
-    volumes:
-      - "/home/gluster/ssd01:/var/lib/mysql"
-      - "/mnt/storage:/var/www/storage"
-
   mysql:
     image: docker.viraweb123.ir/mysql
     hostname: mysql
@@ -66,22 +48,22 @@ services:
       placement:
         constraints: 
           - node.labels.type == gateway
+      mode: global
     labels:
       com.dgyar.description: "Public webapp interface"
       com.dgyar.department: "IT"
     volumes:
       - "/mnt/storage:/var/www/storage"
-      - "/mnt/logs:/var/www/logs"
+ #     - "/mnt/logs:/var/www/logs"
       - "/mnt/apache:/etc/apache2"
       - "/mnt/letsencrypt:/etc/letsencrypt"
     ports:
-      - "8082:80"
+      - "80:80"
       - "443:443"
     networks:
-      - front-tier
+#      - front-tier
       - back-tier
     depends_on:
       - mysql
-      - prerender
 
 

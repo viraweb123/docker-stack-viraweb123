@@ -34,6 +34,10 @@ return array(
     'middleware_classes' => array(
         'Pluf_Middleware_TenantFromConfig',
         'Tenant_Middleware_Verifier',
+        // Load user and session
+        'Pluf_Middleware_Session',
+        'User_Middleware_BasicAuth',
+        'User_Middleware_Session',
     ),
 
     'mimetypes_db' =>  '/var/www/etc/mime.types',
