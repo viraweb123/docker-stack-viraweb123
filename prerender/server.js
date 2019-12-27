@@ -13,6 +13,8 @@ const removeScriptTags = require('./plugins/removeScriptTags');
 const removeStyle = require('./plugins/removeStyle');
 const removeComment = require('./plugins/removeComment');
 
+const addLinks = require('./plugins/addLinks');
+
 const options = {
 		pageDoneCheckInterval: process.env.PAGE_DONE_CHECK_INTERVAL || 500,
 		pageLoadTimeout: process.env.PAGE_LOAD_TIMEOUT || 20000,
@@ -39,6 +41,8 @@ server.use(removeComment);
 server.use(removeScriptTags);
 server.use(removePrefetchTags);
 server.use(removeAngularjs);
+
+server.use(addLinks);
 
 server.use(log);
 server.use(healthcheck('_health'));
