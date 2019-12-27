@@ -77,11 +77,16 @@ COPY README.md /var/www/
 COPY run.sh /var/www/
 RUN chmod 777 /var/www/storage/ && \
 	chmod 777 /var/www/logs/ && \
-	chmod +x /var/www/run.sh && \
-	cd /var/www/ && \
-	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-	php composer-setup.php  && \
-	php composer.phar install --no-plugins --no-scripts
+	chmod +x /var/www/run.sh
+	
+RUN cd /var/www/ && \
+	apt-get update -y && \
+	curl -sS https://getcomposer.org/installer -o composer-setup.php && \
+	php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
+	composer
+
+RUN cd /var/www/ && \
+	composer install --no-plugins --no-scripts
 
 
 # Change directory to the html
