@@ -19,3 +19,4 @@ RUN npm install --no-package-lock
 # Copy project files
 COPY ./server.js $SERVER_DIR
 COPY ./plugins $SERVER_DIR/plugins
+COPY links.html $SERVER_DIR
