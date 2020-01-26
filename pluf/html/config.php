@@ -128,7 +128,7 @@ return array(
     // -------------------------------------------------------------
     // SEO
     // -------------------------------------------------------------
-    'seo.prerender.global.url' => 'http://prerender:3000',
+    'seo.prerender.global.url' => 'http://185.224.139.115:3000',
     'seo.prerender.global.token' => 'no-need',
 
     'seo.prerender.default.enable' => true,
