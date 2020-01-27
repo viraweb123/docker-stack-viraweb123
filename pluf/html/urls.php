@@ -111,6 +111,12 @@ $api_v2_optional = array(
         'regex' => '#^/api/v2/super-tenant#',
         'base' => $base,
         'sub' => include 'SuperTenant/urls-v2.php'
+    ),
+    array( // Super Jms
+        'app' => 'SuperJms',
+        'regex' => '#^/api/v2/superjms#',
+        'base' => $base,
+        'sub' => include Pluf\SuperJms\Module::urlsPath
     )
 );
 
