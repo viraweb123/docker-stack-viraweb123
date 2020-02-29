@@ -30,7 +30,7 @@ return array(
         'Jms',
         'SuperJms'
     ),
-    'spas'=> array('amh-shop', 'my-dashboard'),
+    'spas'=> array('wb', 'vw-studio', 'vw-dashboard'),
     'middleware_classes' => array(
         // find tenant
         'Pluf_Middleware_TenantEmpty',
