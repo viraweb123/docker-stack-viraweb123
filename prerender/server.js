@@ -20,7 +20,7 @@ const options = {
 		pageLoadTimeout: process.env.PAGE_LOAD_TIMEOUT || 20000,
 		waitAfterLastRequest: process.env.WAIT_AFTER_LAST_REQUEST || 250,
 		forwardHeaders: true,
-		chromeLocation: '/usr/bin/chromium-browser',
+		chromeLocation: '/usr/bin/chromium',
 		chromeFlags: [ 
 			'--no-sandbox', 
 			'--headless', 
