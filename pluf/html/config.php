@@ -123,7 +123,7 @@ return array(
         )
     ),
 
-    'marketplace.backend' => 'http://marketplace',
+    'marketplace.backend' => 'https://marketplace.viraweb123.ir',
 
     // -------------------------------------------------------------
     // SEO
