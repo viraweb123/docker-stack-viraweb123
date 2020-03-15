@@ -3,7 +3,7 @@ version: "3.7"
 networks:
   front-tier:
     name: front-tier
-    #driver: overlay
+    driver: overlay
     attachable: true
     ipam:
       config:
@@ -11,7 +11,7 @@ networks:
 #        - gateway: 70.28.5.254
   back-tier:
     name: back-tier
-    #driver: overlay
+    driver: overlay
     attachable: true
  
 services:
