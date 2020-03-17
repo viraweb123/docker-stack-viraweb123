@@ -38,7 +38,7 @@ services:
     networks:
       - back-tier
     volumes:
-      - "/home/gluster/ssd01:/var/lib/mysql"
+      - "/mnt/mysql:/var/lib/mysql"
   pluf:
     image: docker.viraweb123.ir/pluf
     hostname: pluf

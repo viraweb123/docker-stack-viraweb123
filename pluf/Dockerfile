@@ -3,7 +3,7 @@
 #
 # SEE: https://github.com/docker-library/php/blob/67efd89c36bf15cb5ba096213e0536b2cab5eb38/7.2/stretch/apache/Dockerfile
 #
-FROM php:7.2-apache
+FROM php:7.4-apache
 MAINTAINER ViraWeb123 (info@viraweb123.com)
 
 ENV COMPOSER_ALLOW_SUPERUSER 1

@@ -14,49 +14,49 @@ $api_v2 = array(
         'app' => 'Tenant',
         'regex' => '#^/api/v2/tenant#',
         'base' => $base,
-        'sub' => include 'Tenant/urls-v2.php'
+        'sub' => include 'Tenant/urls.php'
     ),
     array(
         'app' => 'Group',
         'regex' => '#^/api/v2/user/groups#',
         'base' => $base,
-        'sub' => include 'Group/urls-v2.php'
+        'sub' => include 'Group/urls.php'
     ),
     array(
         'app' => 'Role',
         'regex' => '#^/api/v2/user/roles#',
         'base' => $base,
-        'sub' => include 'Role/urls-v2.php'
+        'sub' => include 'Role/urls.php'
     ),
     array(
         'app' => 'Message',
         'regex' => '#^/api/v2/user/messages#',
         'base' => $base,
-        'sub' => include 'Message/urls-v2.php'
+        'sub' => include 'Message/urls.php'
     ),
     array( // User Management System
         'app' => 'User',
         'regex' => '#^/api/v2/user#',
         'base' => $base,
-        'sub' => include 'User/urls-v2.php'
+        'sub' => include 'User/urls.php'
     ),
     array( // CMS : Content Management System
         'app' => 'CMS',
         'regex' => '#^/api/v2/cms#',
         'base' => $base,
-        'sub' => include 'CMS/urls-v2.php'
+        'sub' => include 'CMS/urls.php'
     ),
     array( // Monitors
         'app' => 'Monitor',
         'regex' => '#^/api/v2/monitor#',
         'base' => $base,
-        'sub' => include 'Monitor/urls-v2.php'
+        'sub' => include 'Monitor/urls.php'
     ),
     array( // Seo
         'app' => 'Seo',
         'regex' => '#^/api/v2/seo#',
         'base' => $base,
-        'sub' => include 'Seo/urls-v2.php'
+        'sub' => include 'Seo/urls.php'
     ),
     array( // Bank
         'app' => 'Bank',
@@ -104,13 +104,13 @@ $api_v2_optional = array(
         'app' => 'Marketplace',
         'regex' => '#^/api/v2/marketplace#',
         'base' => $base,
-        'sub' => include 'Marketplace/urls-v2.php'
+        'sub' => include 'Marketplace/urls.php'
     ),
     array( // Super Tenant
         'app' => 'SuperTenant',
         'regex' => '#^/api/v2/super-tenant#',
         'base' => $base,
-        'sub' => include 'SuperTenant/urls-v2.php'
+        'sub' => include 'SuperTenant/urls.php'
     ),
     array( // Super Jms
         'app' => 'SuperJms',
@@ -125,16 +125,6 @@ foreach ($api_v2_optional as $moduleApi) {
         array_push($api_v2, $moduleApi);
     }
 }
-
-/*
- * API to load SPAs. It should be last API.
- */
-array_push($api_v2, array( // Loading SPAs
-    'app' => 'Tenant',
-    'regex' => '#^#',
-    'base' => $base,
-    'sub' => include 'Tenant/urls-app-v2.php'
-));
 
 /*
  * Merge old and new APIs.
