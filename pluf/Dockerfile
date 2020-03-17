@@ -19,6 +19,8 @@ RUN mkdir -p /usr/share/man/man1
 #
 RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
+		libonig-dev \
+		libzip-dev \
 		libssl-dev \
 		libcurl4-openssl-dev \
 		curl \
