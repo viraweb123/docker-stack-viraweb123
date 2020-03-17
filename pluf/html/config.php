@@ -27,29 +27,46 @@ return array(
         'Jms',
         'SuperJms'
     ),
-    'spas'=> array('wb', 'vw-studio', 'vw-dashboard'),
     'middleware_classes' => array(
-        // find tenant
+        '\Pluf\Seo\Middleware\Render',
+
+        '\Pluf\Middleware\Tenant',
         'Tenant_Middleware_ResourceAccess',
-        'Pluf\Middleware\Tenant',
         'Tenant_Middleware_Verifier', // It should be the last middleware about tenant.
+
         // Load user and session
-        'Pluf\Middleware\Session',
+        '\Pluf\Middleware\Session',
         'User_Middleware_BasicAuth',
         'User_Middleware_Session',
-        'Captcha_Middleware_Verifier', // Must be affter session and tenant
-        'Seo_Middleware_Render',
-        'Cache_Middleware_RFC7234',
-        // 'User_Middleware_Space', // It should be one of lastest middlewares
-        // 'RestLog_Middleware_Audit'
+        '\Pluf\Captcha\Middleware\Verifier', // Must be affter session and tenant
+        '\Pluf\Cache\Middleware\RFC7234'
     ),
 
-    'mimetypes_db' =>  '/var/www/etc/mime.types',
+    'mimetypes_db' => '/var/www/etc/mime.types',
     'languages' => array(
         'fa',
         'en'
     ),
-    'tmp_folder' =>  '/tmp',
+    'tmp_folder' => '/tmp',
+    'upload_path' => '/var/www/storage',
+    'upload_max_size' => 524288000,
+    'time_zone' => 'Asia/Tehran',
+    'encoding' => 'UTF-8',
+    'secret_key' => '5a8d7e0f2aad8bdab8f6eef725412850',
+    'migrate_allow_web' => false,
+    /*
+     * Mail
+     */
+    'mail_backend' => 'mail',
+
+    // -------------------------------------------------------------
+    // View and REST API
+    // -------------------------------------------------------------
+    'view_prefix' => '/api/v2',
+
+    // -------------------------------------------------------------
+    // Template
+    // -------------------------------------------------------------
     'template_folders' => array(
         '/var/www/storage/templates',
         '/var/www/vendor/pluf/seo/src/Seo/templates',
@@ -61,19 +78,18 @@ return array(
         'tenant' => 'Pluf_Template_Tag_Tenant',
         'setting' => 'Tenant_Template_Tag_Setting'
     ),
-    'upload_path' =>  '/var/www/storage',
-    'upload_max_size' => 524288000,
-    'time_zone' => 'Asia/Tehran',
-    'encoding' => 'UTF-8',
 
-    'secret_key' => '5a8d7e0f2aad8bdab8f6eef725412850',
-    'user_account_auto_activate' => true,
-    'user_avatra_max_size' => 2097152,
+    // -------------------------------------------------------------
+    // Logger
+    // -------------------------------------------------------------
+    'log_level' => 'error',
     'log_delayed' => true,
-    'log_handler' => 'Pluf_Log_File',
-    'log_level' => Pluf_Log::ERROR,
-    'pluf_log_file' => '/var/www/logs/pluf.log',
+    'log_formater' => '\Pluf\LoggerFormatter\Plain',
+    'log_appender' => '\Pluf\LoggerAppender\Console',
 
+    // -------------------------------------------------------------
+    // DB and Data layer (ORM)
+    // -------------------------------------------------------------
     'db_engine' => 'MySQL',
     'db_version' => '5.5.33',
     'db_login' => 'pluf',
@@ -81,24 +97,6 @@ return array(
     'db_server' => 'mysql',
     'db_database' => 'plufdb',
     'db_table_prefix' => '',
-
-    'mail_backend' => 'mail',
-
-    'user_profile_class' => 'User_Profile',
-
-    'subdomain_min_length' => 5,
-    'reserved_subdomains' => array(
-        'www',
-        'blog',
-        'developer',
-        'developers',
-        'market',
-        'marketplace'
-    ),
-    'tenant_default' => 'www',
-    'multitenant' => true,
-    'bank_debug' => false,
-    'migrate_allow_web' => false,
 
     'orm.typecasts' => array(
         'Geo_DB_Field_Polygon' => array(
@@ -114,18 +112,108 @@ return array(
             'Geo_DB_PointToDb'
         )
     ),
+    // -------------------------------------------------------------
+    // backup
+    // -------------------------------------------------------------
 
-    'marketplace.backend' => 'https://marketplace.viraweb123.ir',
+    // -------------------------------------------------------------
+    // Captcha
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // CMS
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // Bank & Disount
+    // -------------------------------------------------------------
+
+    'bank_debug' => false,
+
+    // -------------------------------------------------------------
+    // DM (Download manager)
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // marketplace
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // monitor
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // sdp
+    // -------------------------------------------------------------
 
     // -------------------------------------------------------------
     // SEO
     // -------------------------------------------------------------
-    'seo.prerender.global.url' => 'http://185.224.139.115:3000',
-    'seo.prerender.global.token' => 'no-need',
+    'seo_prerender_global_url' => 'http://185.224.139.115:3000',
+    'seo_prerender_global_token' => 'no-need',
 
-    'seo.prerender.default.enable' => true,
-    'seo.prerender.default.engine' => 'global',
-    'seo.prerender.default.period' => '+7 days',
-    'seo.prerender.default.pattern' => '.*',
+    'seo_prerender_default_enable' => true,
+    'seo_prerender_default_engine' => 'global',
+    'seo_prerender_default_period' => '+7 days',
+    'seo_prerender_default_pattern' => '.*',
+
+    // -------------------------------------------------------------
+    // shop
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // mall
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // jms
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // super-jms
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // tenant
+    // -------------------------------------------------------------
+    'tenant_spa_marketplace_backend' => 'https://marketplace.viraweb123.ir',
+    'tenant_spa_default' => array(
+        'wb',
+        'vw-studio',
+        'vw-dashboard'
+    ),
+    'tenant_spa_config' => 'spa.json',
+    'tenant_default' => 'www',
+
+    'tenant_subdomains_min_length' => 5,
+    'tenant_subdomains_reserved' => array(
+        'www',
+        'blog',
+        'developer',
+        'developers',
+        'market',
+        'marketplace'
+    ),
+
+    // -------------------------------------------------------------
+    // super-tenant
+    // -------------------------------------------------------------
+    'multitenant' => true,
+
+    // -------------------------------------------------------------
+    // tms
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // super-tms
+    // -------------------------------------------------------------
+
+    // -------------------------------------------------------------
+    // user
+    // -------------------------------------------------------------
+    'user_account_auto_activate' => true,
+    'user_avatra_max_size' => 2097152
+
+    // 'user_profile_class' => 'User_Profile',
 );
 

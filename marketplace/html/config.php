@@ -125,8 +125,8 @@ return array(
             'Geo_DB_PointToDb'
         )
     ),
-
-    'marketplace.backend' => 'http://hub.viraweb123.ir',
+    
+    'tenant_spa_marketplace_backend' => 'https://marketplace.viraweb123.ir',
 
     // -------------------------------------------------------------
     // SEO
