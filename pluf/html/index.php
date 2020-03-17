@@ -5,5 +5,6 @@ require 'Pluf.php';
 use Pluf\Module;
 
 Pluf::start('config.php');
-Pluf_Dispatcher::dispatch(Pluf_HTTP_URL::getAction(), Module::loadControllers());
+$url = new Pluf_HTTP_URL();
+Pluf_Dispatcher::dispatch($url->getAction(), Module::loadControllers());
 
