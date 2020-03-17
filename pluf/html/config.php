@@ -28,12 +28,12 @@ return array(
         'SuperJms'
     ),
     'middleware_classes' => array(
-        '\Pluf\Seo\Middleware\Render',
-
         '\Pluf\Middleware\Tenant',
         'Tenant_Middleware_ResourceAccess',
         'Tenant_Middleware_Verifier', // It should be the last middleware about tenant.
 
+        '\Pluf\Seo\Middleware\Render',
+        
         // Load user and session
         '\Pluf\Middleware\Session',
         'User_Middleware_BasicAuth',
