@@ -19,10 +19,10 @@ return array(
         'Seo',
         'RestLog',
         'Shop',
-        'SDP',
+        'Sdp',
         'Exchange',
         'Marketplace',
-        'TMS',
+        'Tms',
         'SuperTms',
         'Jms',
         'SuperJms'
