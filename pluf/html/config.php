@@ -178,6 +178,7 @@ return array(
     // tenant
     // -------------------------------------------------------------
     'tenant_spa_marketplace_backend' => 'https://marketplace.viraweb123.ir',
+    'tenant_spa_marketplace_api_prefix' => '/api/v2',
     'tenant_spa_default' => array(
         'wb',
         'vw-studio',
