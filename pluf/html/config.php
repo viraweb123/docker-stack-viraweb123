@@ -196,6 +196,7 @@ return array(
         'market',
         'marketplace'
     ),
+    'tenant_notfound_url' => 'https://viraweb123.ir/wb/shop/page/how-config-notfound-tenant',
 
     // -------------------------------------------------------------
     // super-tenant
