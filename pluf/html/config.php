@@ -96,7 +96,7 @@ return array(
     'db_password' => 'password',
     'db_server' => 'mysql',
     'db_database' => 'plufdb',
-    'db_table_prefix' => '',
+    'db_schema_table_prefix' => '',
 
     // -------------------------------------------------------------
     // backup
