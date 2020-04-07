@@ -29,11 +29,9 @@ return array(
     ),
     'middleware_classes' => array(
         '\Pluf\Middleware\Tenant',
+        '\Pluf\Seo\Middleware\Render',
         'Tenant_Middleware_ResourceAccess',
         'Tenant_Middleware_Verifier', // It should be the last middleware about tenant.
-
-        '\Pluf\Seo\Middleware\Render',
-        
         // Load user and session
         '\Pluf\Middleware\Session',
         'User_Middleware_BasicAuth',
@@ -99,20 +97,6 @@ return array(
     'db_database' => 'plufdb',
     'db_table_prefix' => '',
 
-    'orm.typecasts' => array(
-        'Geo_DB_Field_Polygon' => array(
-            'Geo_DB_GeometryFromDb',
-            'Geo_DB_PolygonToDb'
-        ),
-        'Geo_DB_Field_Geometry' => array(
-            'Geo_DB_GeometryFromDb',
-            'Geo_DB_GeometryToDb'
-        ),
-        'Geo_DB_Field_Point' => array(
-            'Geo_DB_GeometryFromDb',
-            'Geo_DB_PointToDb'
-        )
-    ),
     // -------------------------------------------------------------
     // backup
     // -------------------------------------------------------------
