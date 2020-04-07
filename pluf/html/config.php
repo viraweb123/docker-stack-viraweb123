@@ -89,7 +89,8 @@ return array(
     // -------------------------------------------------------------
     // DB and Data layer (ORM)
     // -------------------------------------------------------------
-    'db_engine' => 'MySQL',
+    'db_engine' => '\Pluf\Db\MySQLEngine',
+    'db_schema' => '\Pluf\Db\MySQLSchema',
     'db_version' => '5.5.33',
     'db_login' => 'pluf',
     'db_password' => 'password',
