@@ -57,6 +57,9 @@ RUN docker-php-source extract && \
 	# Delete source
 	docker-php-source delete
 
+# Install APCu
+RUN pecl install apcu \
+    && docker-php-ext-enable apcu --ini-name 10-docker-php-ext-apcu.ini
 
 
 RUN wget https://dl.eff.org/certbot-auto && \
