@@ -68,7 +68,7 @@ return array(
     // -------------------------------------------------------------
     'template_folders' => array(
         '/var/www/storage/templates',
-        '/var/www/vendor/pluf/seo/src/Seo/templates',
+        '/var/www/vendor/pluf/seo/templates',
         '/var/www/vendor/pluf/bank/src/Bank/templates'
     ),
     'template_tags' => array(
