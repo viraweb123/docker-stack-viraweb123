@@ -2,8 +2,9 @@
 # Dockerfile
 #
 # SEE: https://github.com/docker-library/php/blob/67efd89c36bf15cb5ba096213e0536b2cab5eb38/7.2/stretch/apache/Dockerfile
+# SEE: https://hub.docker.com/layers/php/library/php/7.4.5-apache/images/sha256-f615d3f76fd98e1dde792e4ad514175d652e18c9d3400c94783d0c10354bbc95?context=explore
 #
-FROM php:7.4-apache
+FROM php:7.4.5-apache
 MAINTAINER ViraWeb123 (info@viraweb123.com)
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
