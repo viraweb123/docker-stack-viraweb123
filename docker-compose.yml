@@ -1,18 +1,10 @@
 version: "3.7"
 
 networks:
-  front-tier:
-    name: front-tier
-    driver: overlay
-    attachable: true
-    ipam:
-      config:
-        - subnet: 70.28.0.0/16
-#        - gateway: 70.28.5.254
   back-tier:
     name: back-tier
-    driver: overlay
-    attachable: true
+    # driver: overlay
+    # attachable: true
  
 services:
   mysql:
