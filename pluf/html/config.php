@@ -26,7 +26,8 @@ return array(
         'SuperTms',
         'Jms',
         'SuperJms',
-        'Vpn'
+        'Vpn',
+        'Lottery'
     ),
     'middleware_classes' => array(
         '\Pluf\Middleware\Tenant',
