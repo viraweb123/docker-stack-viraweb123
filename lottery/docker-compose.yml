@@ -1,0 +1,30 @@
+version: "3.7"
+
+networks:
+  back-tier:
+    name: back-tier
+    # driver: overlay
+    # attachable: true
+ 
+services:
+  lottery:
+    image: docker.viraweb123.ir/lottery:6.0.17
+    hostname: lottery
+    deploy:
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints: 
+          - node.labels.type == gateway
+      mode: global
+    volumes:
+#      - "/mnt/storage:/var/www/storage"
+ #     - "/mnt/logs:/var/www/logs"
+      - "/mnt/apache:/etc/apache2"
+#      - "/mnt/letsencrypt:/etc/letsencrypt"
+    ports:
+      - "1080:80"
+#      - "1443:443"
+    networks:
+      - back-tier
+

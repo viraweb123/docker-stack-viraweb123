@@ -1,0 +1,27 @@
+{
+	"name" : "microsys/lottery",
+	"description" : "Lottery microsystem",
+	"version" : "6.0.17",
+	"type" : "project",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Mostafa Barmshory",
+			"email" : "mostafa.barmshory@dpq.co.ir",
+			"homepage" : "http://dpq.co.ir",
+			"role" : "developer"
+		}, {
+			"name" : "Mohammad Hadi Mansouri",
+			"email" : "mohammad.hadi.mansouri@dpq.co.ir",
+			"homepage" : "http://dpq.co.ir",
+			"role" : "developer"
+		}
+	],
+	"minimum-stability" : "stable",
+	"prefer-stable" : true,
+	"require" : {
+		"pluf/tenant" : "6.0.x",
+		"pluf/user" : "6.0.x",
+		"pluf/lottery" : "6.0.x"
+	},
+	"homepage" : "https://github.com/pluf/lottery"
+}
