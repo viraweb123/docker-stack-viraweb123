@@ -1,7 +1,7 @@
 {
-	"name" : "pluf/demo",
+	"name" : "pluf/server",
 	"description" : "ViraWeb HTTP access node",
-	"version" : "6.0.18",
+	"version" : "6.0.19",
 	"type" : "project",
 	"license" : "MIT",
 	"authors" : [{
