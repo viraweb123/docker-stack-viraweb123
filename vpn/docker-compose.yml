@@ -1,0 +1,63 @@
+version: "3.7"
+
+networks:
+  back-tier:
+    name: back-tier
+ 
+services:
+  mysql:
+    image: docker.viraweb123.ir/mysql
+    hostname: mysql
+    deploy:
+      restart_policy:
+        condition: on-failure
+    command: --sql_mode=""
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssw0rd
+      MYSQL_DATABASE: plufdb
+      MYSQL_USER: pluf
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+    networks:
+      - back-tier
+    volumes:
+      - "/mnt/mysql:/var/lib/mysql"
+  vpn:
+    image: docker.viraweb123.ir/vpn
+    hostname: pluf
+    deploy:
+      restart_policy:
+        condition: on-failure
+      mode: global
+    volumes:
+      - "/mnt/storage:/var/www/storage"
+      - "/mnt/apache:/etc/apache2"
+      - "/mnt/letsencrypt:/etc/letsencrypt"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - back-tier
+    depends_on:
+      - mysql
+
+  nginxpm:
+    image: jc21/nginx-proxy-manager:latest
+    hostname: nginxpm
+    deploy:
+      restart_policy:
+        condition: on-failure
+      mode: global
+    volumes:
+      - "/mnt/nginxpm/config.json:/app/config/production.json"
+      - "/mnt/nginxpm/data:/data"
+      - "/mnt/letsencrypt:/etc/letsencrypt"
+    ports:
+      - "81:81"
+      - "80:80"
+      - "443:443"
+    networks:
+      - back-tier
+    depends_on:
+      - mysql
+
