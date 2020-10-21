@@ -1,4 +1,4 @@
-FROM node:10.15-alpine
+FROM node:14.14.0-alpine3.12
 
 # install chromium and clear cache
 ENV CHROME_BIN=/usr/bin/chromium-browser
