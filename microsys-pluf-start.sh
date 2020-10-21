@@ -1,4 +1,4 @@
-Command to create a service to run the pluf:
+#!/bin/bash
 
 docker service create --name pluf \
     --replicas 1 \
