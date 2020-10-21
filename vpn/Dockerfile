@@ -5,7 +5,7 @@
 # SEE: https://hub.docker.com/layers/php/library/php/7.4.5-apache/images/sha256-f615d3f76fd98e1dde792e4ad514175d652e18c9d3400c94783d0c10354bbc95?context=explore
 #
 FROM php:7.4.5-apache
-MAINTAINER ViraWeb123 (info@viraweb123.com)
+LABEL maintainer="info@viraweb123.com"
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_ALLOW_SUPERUSER 0
@@ -20,32 +20,43 @@ RUN apt-get update && \
 	apt-get install -y --no-install-recommends \
 		libonig-dev \
 		libzip-dev \
+		libssl-dev \
+		libcurl4-openssl-dev \
 		curl \
 		zlib1g-dev \
 		zip \
-		unzip && \
+		unzip \
+		git && \
 	rm -rf /var/lib/apt/lists/\*
 
 #
 # Install extenstions
 #
-RUN docker-php-source extract && \
+RUN docker-php-source extract \
+	&& cd /usr/src/php \
+	&& curl https://github.com/mostafabarmshory/php-src/commit/d10a78bec4680763668fa4acb96c11e2a532756a.patch --output ssl.patch \
+	&& git apply --stat ssl.patch \
 	# Install extensions
-	docker-php-ext-install ctype &&\
-	docker-php-ext-install json && \
-	docker-php-ext-install mbstring && \
-	docker-php-ext-install mysqli && \
-	docker-php-ext-install zip && \
-	docker-php-ext-install bcmath && \
+	&& docker-php-ext-install ctype \
+	&& docker-php-ext-install openssl || \
+		( mv /usr/src/php/ext/openssl/config0.m4 /usr/src/php/ext/openssl/config.m4 && docker-php-ext-install openssl ) \
+	&& docker-php-ext-install json \
+	&& docker-php-ext-install mbstring \
+	&& docker-php-ext-install mysqli \
+	&& docker-php-ext-install zip \
+	&& docker-php-ext-install bcmath \
 	# Enable extensions
-	docker-php-ext-enable zip && \
-	docker-php-ext-enable mysqli && \
-	docker-php-ext-enable json mbstring && \
-	docker-php-ext-enable ctype && \
+	&& docker-php-ext-enable \
+		ctype \
+		openssl \
+		json \
+		mbstring \
+		mysqli \
+		zip \
 	# enable PHP mode
-	a2enmod rewrite && \
+	&& a2enmod rewrite \
 	# Delete source
-	docker-php-source delete
+	&& docker-php-source delete
 
 # files
 COPY composer.json /var/www/
