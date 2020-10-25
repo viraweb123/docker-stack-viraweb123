@@ -23,7 +23,7 @@ services:
     volumes:
       - "/mnt/mysql:/var/lib/mysql"
   vpn:
-    image: docker.viraweb123.ir/vpn
+    image: docker.viraweb123.ir/vpn:6.0.19
     hostname: pluf
     deploy:
       restart_policy:
@@ -41,23 +41,23 @@ services:
     depends_on:
       - mysql
 
-  nginxpm:
-    image: jc21/nginx-proxy-manager:latest
-    hostname: nginxpm
-    deploy:
-      restart_policy:
-        condition: on-failure
-      mode: global
-    volumes:
-      - "/mnt/nginxpm/config.json:/app/config/production.json"
-      - "/mnt/nginxpm/data:/data"
-      - "/mnt/letsencrypt:/etc/letsencrypt"
-    ports:
-      - "81:81"
-      - "80:80"
-      - "443:443"
-    networks:
-      - back-tier
-    depends_on:
-      - mysql
+#  nginxpm:
+#    image: jc21/nginx-proxy-manager:latest
+#    hostname: nginxpm
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+#      mode: global
+#    volumes:
+#      - "/mnt/nginxpm/config.json:/app/config/production.json"
+#      - "/mnt/nginxpm/data:/data"
+#      - "/mnt/letsencrypt:/etc/letsencrypt"
+#    ports:
+#      - "81:81"
+#      - "80:80"
+#      - "443:443"
+#    networks:
+#      - back-tier
+#    depends_on:
+#      - mysql
 
