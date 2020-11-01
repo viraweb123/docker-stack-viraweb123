@@ -56,11 +56,10 @@ RUN apt-get update \
 
 
 
-
 ####################################################
 # Installl composer
 ####################################################
-COPY composer.json /var/www/
+COPY ./composer.json /var/www/
 RUN cd /var/www/ \
 	&& mkdir /var/www/storage/ \
 	&& mkdir /var/www/logs/ \

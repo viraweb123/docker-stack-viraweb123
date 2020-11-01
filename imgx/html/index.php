@@ -47,7 +47,7 @@ $container['modelDescriptionRepository'] = Container::service(function () {
     return new ModelDescriptionRepository([
         // TODO: maso, 2020: we need a model description loader with reflection.
         new MapModelDescriptionLoader([
-            Content::class => require __DIR__ . '/../md/ContentMd.php'
+            Content::class => require __DIR__ . '/../vendor/pluf/imgx/md/ContentMd.php'
         ])
     ]);
 });
