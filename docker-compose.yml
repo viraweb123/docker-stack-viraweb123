@@ -27,6 +27,8 @@ services:
       MYSQL_USER: pluf
       MYSQL_PASSWORD: password
       MYSQL_ROOT_HOST: '%'
+#    ports:
+#      - "3306:3306"
     networks:
       - back-tier
     volumes:
