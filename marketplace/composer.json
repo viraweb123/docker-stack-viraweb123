@@ -1,7 +1,7 @@
 {
-	"name" : "pluf/server",
+	"name" : "pluf/demo",
 	"description" : "ViraWeb HTTP access node",
-	"version" : "6.0.21",
+	"version" : "6.0.8",
 	"type" : "project",
 	"license" : "MIT",
 	"authors" : [{
@@ -40,9 +40,7 @@
 		"pluf/tms" : "6.0.x",
 		"pluf/super-tms" : "6.0.x",
 		"pluf/jms" : "6.0.x",
-		"pluf/superjms" : "6.0.x",
-		"pluf/vpn" : "6.0.x",
-		"pluf/lottery" : "6.0.x"
+		"pluf/superjms" : "6.0.x"
 	},
 	"homepage" : "https://github.com/pluf/demo",
 	"support" : {
@@ -54,8 +52,6 @@
 	"keywords" : [
 		"pluf",
 		"site",
-		"demo",
-		"shop",
-		"cms"
+		"demo"
 	]
 }

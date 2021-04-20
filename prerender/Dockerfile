@@ -1,4 +1,4 @@
-FROM node:10.15-alpine
+FROM node:14.14.0-alpine3.12
 
 # install chromium and clear cache
 ENV CHROME_BIN=/usr/bin/chromium-browser
@@ -19,3 +19,4 @@ RUN npm install --no-package-lock
 # Copy project files
 COPY ./server.js $SERVER_DIR
 COPY ./plugins $SERVER_DIR/plugins
+COPY links.html $SERVER_DIR

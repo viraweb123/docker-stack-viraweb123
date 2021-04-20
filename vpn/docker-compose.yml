@@ -3,8 +3,6 @@ version: "3.7"
 networks:
   back-tier:
     name: back-tier
-    # driver: overlay
-    # attachable: true
  
 services:
   mysql:
@@ -13,13 +11,6 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
-      placement:
-        constraints: 
-          - node.labels.disk == ssd
-      replicas: 1
-    labels:
-      com.dgyar.description: "Data node"
-      com.dgyar.department: "IT"
     command: --sql_mode=""
     environment:
       MYSQL_ROOT_PASSWORD: P@ssw0rd
@@ -27,37 +18,46 @@ services:
       MYSQL_USER: pluf
       MYSQL_PASSWORD: password
       MYSQL_ROOT_HOST: '%'
-#    ports:
-#      - "3306:3306"
     networks:
       - back-tier
     volumes:
       - "/mnt/mysql:/var/lib/mysql"
-  pluf:
-    image: docker.viraweb123.ir/pluf
+  vpn:
+    image: docker.viraweb123.ir/vpn:6.0.19
     hostname: pluf
     deploy:
       restart_policy:
         condition: on-failure
-      placement:
-        constraints: 
-          - node.labels.type == gateway
       mode: global
-    labels:
-      com.dgyar.description: "Public webapp interface"
-      com.dgyar.department: "IT"
     volumes:
       - "/mnt/storage:/var/www/storage"
- #     - "/mnt/logs:/var/www/logs"
       - "/mnt/apache:/etc/apache2"
       - "/mnt/letsencrypt:/etc/letsencrypt"
     ports:
       - "80:80"
       - "443:443"
     networks:
-#      - front-tier
       - back-tier
     depends_on:
       - mysql
 
+#  nginxpm:
+#    image: jc21/nginx-proxy-manager:latest
+#    hostname: nginxpm
+#    deploy:
+#      restart_policy:
+#        condition: on-failure
+#      mode: global
+#    volumes:
+#      - "/mnt/nginxpm/config.json:/app/config/production.json"
+#      - "/mnt/nginxpm/data:/data"
+#      - "/mnt/letsencrypt:/etc/letsencrypt"
+#    ports:
+#      - "81:81"
+#      - "80:80"
+#      - "443:443"
+#    networks:
+#      - back-tier
+#    depends_on:
+#      - mysql
 

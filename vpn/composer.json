@@ -1,0 +1,33 @@
+{
+	"name" : "microsys/vpn",
+	"description" : "VPN microsystem",
+	"version" : "6.0.19",
+	"type" : "project",
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Mostafa Barmshory",
+			"email" : "mostafa.barmshory@dpq.co.ir",
+			"homepage" : "http://dpq.co.ir",
+			"role" : "developer"
+		}, {
+			"name" : "Mohammad Hadi Mansouri",
+			"email" : "mohammad.hadi.mansouri@dpq.co.ir",
+			"homepage" : "http://dpq.co.ir",
+			"role" : "developer"
+		}
+	],
+	"minimum-stability" : "stable",
+	"prefer-stable" : true,
+	"require" : {
+		"pluf/cms" : "6.0.x",
+		"pluf/core" : "6.0.x",
+		"pluf/http2" : "6.0.x",
+		"pluf/seo" : "6.0.x",
+		"pluf/supertenant" : "6.0.x",
+		"pluf/tenant" : "6.0.x",
+		"pluf/user" : "6.0.x",
+		"pluf/workflow" : "6.0.x",
+		"pluf/vpn" : "6.0.x"
+	},
+	"homepage" : "https://github.com/pluf/vpn"
+}

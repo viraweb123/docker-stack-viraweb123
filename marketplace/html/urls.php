@@ -4,7 +4,7 @@ $base = '';
 /*
  * Old APIs
  */
-$api_old = array( );
+$api_old = array();
 
 /*
  * Basic API-V2
@@ -81,6 +81,18 @@ $api_v2 = array(
         'regex' => '#^/api/v2/exchange#',
         'base' => $base,
         'sub' => include 'Exchange/urls.php'
+    ),
+    array( // Backup
+        'app' => 'Backup',
+        'regex' => '#^/api/v2/backup#',
+        'base' => $base,
+        'sub' => Pluf\Backup\Module::urls
+    ),
+    array( // Jms
+        'app' => 'Jms',
+        'regex' => '#^/api/v2/jms#',
+        'base' => $base,
+        'sub' => include Pluf\Jms\Module::urlsPath
     )
 );
 
@@ -99,6 +111,12 @@ $api_v2_optional = array(
         'regex' => '#^/api/v2/super-tenant#',
         'base' => $base,
         'sub' => include 'SuperTenant/urls-v2.php'
+    ),
+    array( // Super Jms
+        'app' => 'SuperJms',
+        'regex' => '#^/api/v2/superjms#',
+        'base' => $base,
+        'sub' => include Pluf\SuperJms\Module::urlsPath
     )
 );
 

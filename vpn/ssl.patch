@@ -1,0 +1,70 @@
+From d10a78bec4680763668fa4acb96c11e2a532756a Mon Sep 17 00:00:00 2001
+From: Mostafa Barmshory <mostafa.barmshory@gmail.com>
+Date: Wed, 21 Oct 2020 17:45:59 +0330
+Subject: [PATCH 1/2] use num_sec to generate cert
+
+use num_sec to generate cert
+---
+ ext/openssl/openssl.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/ext/openssl/openssl.c b/ext/openssl/openssl.c
+index 04cb9b0f23..ded2508d7c 100644
+--- a/ext/openssl/openssl.c
++++ b/ext/openssl/openssl.c
+@@ -3450,7 +3450,7 @@ PHP_FUNCTION(openssl_csr_export)
+ PHP_FUNCTION(openssl_csr_sign)
+ {
+ 	zval * zcert = NULL, *zcsr, *zpkey, *args = NULL;
+-	zend_long num_days;
++	zend_long num_sec;
+ 	zend_long serial = Z_L(0);
+ 	X509 * cert = NULL, *new_cert = NULL;
+ 	X509_REQ * csr;
+@@ -3459,7 +3459,7 @@ PHP_FUNCTION(openssl_csr_sign)
+ 	int i;
+ 	struct php_x509_request req;
+ 
+-	if (zend_parse_parameters(ZEND_NUM_ARGS(), "zz!zl|a!l", &zcsr, &zcert, &zpkey, &num_days, &args, &serial) == FAILURE)
++	if (zend_parse_parameters(ZEND_NUM_ARGS(), "zz!zl|a!l", &zcsr, &zcert, &zpkey, &num_sec, &args, &serial) == FAILURE)
+ 		return;
+ 
+ 	RETVAL_FALSE;
+@@ -3536,7 +3536,7 @@ PHP_FUNCTION(openssl_csr_sign)
+ 		goto cleanup;
+ 	}
+ 	X509_gmtime_adj(X509_getm_notBefore(new_cert), 0);
+-	X509_gmtime_adj(X509_getm_notAfter(new_cert), 60*60*24*(long)num_days);
++	X509_gmtime_adj(X509_getm_notAfter(new_cert), 60*60*24*(long)num_sec);
+ 	i = X509_set_pubkey(new_cert, key);
+ 	if (!i) {
+ 		php_openssl_store_errors();
+-- 
+2.26.0
+
+
+From c7a5ef61d117f1ae6036900fbce6354cdce89bc4 Mon Sep 17 00:00:00 2001
+From: Mostafa Barmshory <mostafa.barmshory@gmail.com>
+Date: Sat, 24 Oct 2020 19:41:33 +0330
+Subject: [PATCH 2/2] Remove multiplication and convert the param to second
+
+---
+ ext/openssl/openssl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ext/openssl/openssl.c b/ext/openssl/openssl.c
+index ded2508d7c..2b372b1df6 100644
+--- a/ext/openssl/openssl.c
++++ b/ext/openssl/openssl.c
+@@ -3536,7 +3536,7 @@ PHP_FUNCTION(openssl_csr_sign)
+ 		goto cleanup;
+ 	}
+ 	X509_gmtime_adj(X509_getm_notBefore(new_cert), 0);
+-	X509_gmtime_adj(X509_getm_notAfter(new_cert), 60*60*24*(long)num_sec);
++	X509_gmtime_adj(X509_getm_notAfter(new_cert), (long)num_sec);
+ 	i = X509_set_pubkey(new_cert, key);
+ 	if (!i) {
+ 		php_openssl_store_errors();
+-- 
+2.26.0
+

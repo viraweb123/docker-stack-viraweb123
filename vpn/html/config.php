@@ -10,37 +10,21 @@ return array(
     'installed_apps' => array(
         'Pluf',
         'User',
-        'Monitor',
         'Tenant',
-        'SuperTenant',
-        'Bank',
-        'Backup',
-        'CMS',
-        'Seo',
-        'RestLog',
-        'Shop',
-        'Sdp',
-        'Exchange',
-        'Marketplace',
-        'Tms',
-        'SuperTms',
-        'Jms',
-        'SuperJms',
-        'Vpn',
-        'Lottery'
+        'Vpn'
     ),
     'middleware_classes' => array(
         '\Pluf\Middleware\Tenant',
         'Tenant_Middleware_DefaultSpaRedirect',
-        '\Pluf\Seo\Middleware\Render',
+        # '\Pluf\Seo\Middleware\Render',
         'Tenant_Middleware_ResourceAccess',
         'Tenant_Middleware_Verifier', // It should be the last middleware about tenant.
         // Load user and session
         '\Pluf\Middleware\Session',
         'User_Middleware_BasicAuth',
         'User_Middleware_Session',
-        '\Pluf\Captcha\Middleware\Verifier', // Must be affter session and tenant
-        '\Pluf\Cache\Middleware\RFC7234'
+        # '\Pluf\Captcha\Middleware\Verifier', // Must be affter session and tenant
+        # '\Pluf\Cache\Middleware\RFC7234'
     ),
 
     'mimetypes_db' => '/var/www/etc/mime.types',
